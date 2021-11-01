@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 
 // 1. Helper Func to verify user token
 // 2. User is passed as a props
+
+// HAS TO BE LOGGED
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.token;
   if (authHeader) {
@@ -17,6 +19,7 @@ const verifyToken = (req, res, next) => {
   }
 };
 
+// HAS TO BE LOGGED && OWNER
 const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
@@ -27,6 +30,7 @@ const verifyTokenAndAuthorization = (req, res, next) => {
   });
 };
 
+// HAS TO BE ADMIN
 const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.isAdmin) {

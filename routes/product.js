@@ -35,6 +35,21 @@ router.put('/:id', verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
+router.put('/update/:tracker', verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const updatedProduct = await Product.findOneAndUpdate(
+      { trackerId: req.params.tracker },
+      {
+        $set: req.body
+      },
+      { new: true }
+    ).where({ trackerId: req.params.tracker });
+    res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // DELETE
 router.delete('/:id', verifyTokenAndAdmin, async (req, res) => {
   try {
@@ -95,7 +110,7 @@ router.get('/findone/tracker', async (req, res) => {
 });
 
 // GET ALL PRODUCTS
-router.get('/', async (req, res) => {
+router.get('/', verifyTokenAndAdmin, async (req, res) => {
   try {
     const products = await Product.find();
 
