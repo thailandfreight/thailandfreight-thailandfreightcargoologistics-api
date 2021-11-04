@@ -109,7 +109,7 @@ router.get('/findone/tracker', async (req, res) => {
   }
 });
 
-// GET ALL PRODUCTS
+// GET ALL PRODUCTSS
 router.get('/', verifyTokenAndAdmin, async (req, res) => {
   try {
     const products = await Product.find();
